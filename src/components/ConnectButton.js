@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Web3 from 'web3';
 import {ethers} from 'ethers';
 
-const ConnectButton = () => {
+const ConnectButton = (props) => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [defaultAccount, setDefaultAccount] = useState(null);
@@ -23,6 +23,7 @@ const ConnectButton = () => {
   const accountChangeHandler = (newAccount) => {
     setDefaultAccount(newAccount);
     getUserBalance(newAccount);
+    props.updateAccount(newAccount);
   }
 
   const getUserBalance = (address) => {

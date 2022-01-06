@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import logo from '../logo.png';
 import './App.css';
 import Web3 from 'web3';
@@ -9,6 +10,7 @@ import PitchPage from './2_PitchPage.js';
 import GovernanceGuide from './3_GovernanceGuide.js';
 import Auction from './Auction.js';
 import OBGGovernance from '../abis/OBGGovernance.json';
+import DAO from './DAO.js';
 
 class App extends Component {
 
@@ -22,47 +24,58 @@ class App extends Component {
       //Load account
       const accounts = await web3.eth.getAccounts()
       this.setState({ account: accounts[0] })
-      console.log(this.state.account)
       const networkId = await web3.eth.net.getId()
       const networkData = OBGGovernance.networks[networkId]
       if(networkData) {
         const obggovernance = new web3.eth.Contract(OBGGovernance.abi, networkData.address)
         this.setState({ obggovernance })
+      } else {
+        window.alert("not here")
       }
     } else {
       window.alert("not connected")
     }
   }
 
+  checkBalance = () => {
+    this.state.obggovernance.methods.totalSupply().send({ from: this.state.account })
+    .on('transactionHash', (hash) => {
+      console.log('clicked')
+    })
+  }
+
+  updateAccount = (address) => {
+    this.setState({ account: address });
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      account: ''
+    }
+  }
+
   render() {
     return (
       <div>
-        <Navbar />
-        <div className="container-fluid mt-5">
-          <div className="row">
-            <main role="main" className="col-lg-12 d-flex text-center">
-              <div className="content mr-auto ml-auto">
-                  <img src={logo} style={{ width: '50%' }} className="App-logo" alt="logo" />
-                <h1>OBG DAO Starter Kit</h1>
-                <div className='connectbutton'>
-                  <ConnectButton />
-                </div>
-                <div className='pitchsumwidget'>
-                  <PitchSummary />
-                </div>
-                <div className='pitchpagewidget'>
-                  <PitchPage />
-                </div>
-                <div className='govguidewidget'>
-                  <GovernanceGuide />
-                </div>
-                <div className='auctionwidget'>
-                  <Auction />
-                </div>
-              </div>
+            <main role="main" className="col-lg-12 text-center">
+              <BrowserRouter>
+                <nav>
+                  <div className="flex mt-4">
+                    <Link to="/" className="mr-4">Home</Link>
+                    <Link to="/auction" className="mr-4">
+                      Auction
+                    </Link>
+                    <Link to="/pitchsummary" className="mr-4">Pitch Summary</Link>
+                  </div>
+                </nav>
+                <Routes>
+                  <Route path="/" element ={<DAO updateAccount={this.updateAccount}/>} />
+                  <Route path="/auction" element={<Auction />} />
+                  <Route path="/pitchsummary" element={<PitchSummary />} />
+                </Routes>
+              </BrowserRouter>
             </main>
-          </div>
-        </div>
       </div>
     );
   }
