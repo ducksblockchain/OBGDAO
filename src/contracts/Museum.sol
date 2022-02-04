@@ -32,7 +32,7 @@ contract OBGGovernance is IERC20 {
 
     mapping(address => mapping (address => uint256)) allowed;
 
-    uint256 totalSupply_ = 10 * 10**18;
+    uint256 public totalSupply_ = 10 * 10**18;
 
     // We create/declare this library below
     using SafeMath for uint256;

@@ -23,7 +23,6 @@ const ConnectButton = (props) => {
   const accountChangeHandler = (newAccount) => {
     setDefaultAccount(newAccount);
     getUserBalance(newAccount);
-    props.updateAccount(newAccount);
   }
 
   const getUserBalance = (address) => {
