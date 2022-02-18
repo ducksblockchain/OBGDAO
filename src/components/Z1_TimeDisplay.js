@@ -46,7 +46,7 @@ const TimeDisplay = () => {
 
   return(
     <Fragment>
-      <section className="timer-container">
+      <section className="timer-container" style={{ border: '2px solid red' }}>
         <section className="timer">
           <div classNAme="clock">
             <section>

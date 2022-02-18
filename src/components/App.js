@@ -8,6 +8,7 @@ import Navbar from './4_NavBar.js';
 import PitchSummary from './1_PitchSummary.js';
 import PitchPage from './2_PitchPage.js';
 import GovernanceGuide from './3_GovernanceGuide.js';
+import TimeDisplay from './Z1_TimeDisplay.js';
 import Auction from './Auction.js';
 import UONFTMuseum from '../abis/UONFTMuseum.json';
 import OBGGovernance from '../abis/OBGGovernance.json';
@@ -103,6 +104,7 @@ class App extends Component {
                 </nav>
                 <Routes>
                   <Route path="/" element ={<DAO value={this.state.value} totalSupply={this.state.totalSupply} updateAccount={this.updateAccount} />} />
+                  <Route path="/timeDisplay" element={<TimeDisplay />} />
                   <Route path="/auction" element={<Auction account={this.state.account} />} />
                   <Route path="/pitchsummary" element={<PitchSummary value={this.state.value} />} />
                   <Route path="/pitchpage" element={<PitchPage memberSignup={this.memberSignup} getTokens={this.getTokens} users={this.state.users} account={this.state.account} />} />

@@ -15,6 +15,7 @@ const signMessage = async ({ setError, message }) => {
     const signer = provider.getSigner();
     const signature = await signer.signMessage(message);
     const address = await signer.getAddress();
+    console.log(signature);
 
     return {
       message,
@@ -45,6 +46,7 @@ const PitchPage = (props) => {
     });
     if (sig) {
       setSignatures([...signatures, sig]);
+      console.log(data);
     }
   };
 

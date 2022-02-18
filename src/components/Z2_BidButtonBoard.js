@@ -79,7 +79,7 @@ const BidButtonBoard = (props) => {
   )
 
   return(
-    <div className="bidbuttonboard text-center">
+    <div className="bidbuttonboard text-center" style={{ border: '2px solid red' }}>
       <h2>Button Board</h2>
       <p>{sidebar}</p>
       <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
